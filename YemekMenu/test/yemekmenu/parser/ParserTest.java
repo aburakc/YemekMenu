@@ -17,7 +17,7 @@ public class ParserTest {
 		filtrele(ayinYemegi);
 		
 		for(GununYemegi g : ayinYemegi){
-			System.err.println(g.getDay() + " -- "+ g.getMeal()[0] + g.getMeal()[1] + g.getMeal()[2] + g.getMeal()[3] + g.getMeal()[4] + g.getMeal()[5]);
+			System.err.println(g.getDay() + " -- "+ g.getMeal()[0] + " - " + g.getMeal()[1] +" - " + g.getMeal()[2] + " - " +g.getMeal()[3] + " - " +g.getMeal()[4] + " - " +g.getMeal()[5]+ " - " +g.getMeal()[6]+ " - " +g.getMeal()[7]+" - " + g.getMeal()[8]);
 		}
 		
 	}

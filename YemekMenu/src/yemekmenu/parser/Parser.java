@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Parser {
 	private static final String ADDRESS = "http://wwweski.tubitak.gov.tr/idari/tabldot.php";
 
 	public List<GununYemegi> aylikYemekleriCek() throws IOException {
-		List<GununYemegi> ayinYemegi = new LinkedList<GununYemegi>();
+		List<GununYemegi> ayinYemegi = new ArrayList<GununYemegi>();
 		Document doc = Jsoup.connect(ADDRESS).get();
 		Elements headlines = doc.select("table tr td table tr");
 		for (int i = 1; i < headlines.size(); i++) {
@@ -37,12 +38,16 @@ public class Parser {
 				// pass
 				continue;
 			}
-			String[] meals = new String[dayCells.size()];
+			
+			List<String> mealsList = new ArrayList<String>();
 			for (int j = 1; j < dayCells.size(); j++) {
 				Element element = dayCells.get(j);
-				meals[j - 1] = element.text();
+				if(element.children().size() == 0){
+					if(element.text() != null && element.text().length() != 0)
+						mealsList.add(element.text());
+				}
 			}
-			g.setMeal(meals);
+			g.setMeal(mealsList.toArray(new String[mealsList.size()]));
 			ayinYemegi.add(g);
 		}
 		return ayinYemegi;

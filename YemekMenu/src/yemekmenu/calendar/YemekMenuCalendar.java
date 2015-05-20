@@ -1,6 +1,5 @@
 package yemekmenu.calendar;
 
-import java.net.SocketException;
 import java.util.Date;
 
 import net.fortuna.ical4j.model.Calendar;
@@ -24,23 +23,22 @@ public class YemekMenuCalendar {
 	}
 
 	public static void addMenu(Date date, String[] menu) {
-		VEvent menuEvent = new VEvent(new net.fortuna.ical4j.model.Date(date),
+		java.util.Calendar newCal = java.util.Calendar.getInstance();
+		newCal.setTime(date);
+		newCal.add(java.util.Calendar.DAY_OF_MONTH, 1);
+		VEvent menuEvent = new VEvent(new net.fortuna.ical4j.model.Date(newCal.getTime()),
 				"TUBITAK YEMEK MENUSU");
 		menuEvent.getProperties().getProperty(Property.DTSTART).getParameters()
 				.add(Value.DATE);
 
 		Uid uid = new Uid(date.getTime() + "TUBITAK");
 		menuEvent.getProperties().add(uid);
-
 		StringBuilder sb = new StringBuilder();
-		boolean first = true;
 		for (String str : menu) {
 			sb.append(" \r\n\t ");
 			sb.append(str);
 		}
-		// System.out.println(sb.toString());
 		Description description = new Description(sb.toString());
-
 		menuEvent.getProperties().add(description);
 		getInstance().getComponents().add(menuEvent);
 	}
