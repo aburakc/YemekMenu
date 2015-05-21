@@ -22,6 +22,10 @@ public class YemekMenuCalendar {
 		return getCalendar();
 	}
 
+	public static void cleanCalendar(){
+		getInstance().getComponents().clear();
+	}
+	
 	public static void addMenu(Date date, String[] menu) {
 		java.util.Calendar newCal = java.util.Calendar.getInstance();
 		newCal.setTime(date);
@@ -35,8 +39,8 @@ public class YemekMenuCalendar {
 		menuEvent.getProperties().add(uid);
 		StringBuilder sb = new StringBuilder();
 		for (String str : menu) {
-			sb.append(" \r\n\t ");
 			sb.append(str);
+			sb.append("\r\n");
 		}
 		Description description = new Description(sb.toString());
 		menuEvent.getProperties().add(description);

@@ -19,7 +19,7 @@ import yemekmenu.parser.Parser;
 /**
  * Servlet implementation class iCal
  */
-@WebServlet("/iCal")
+@WebServlet("/calendar.ics")
 public class iCal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static long lastUpdateTime = 0;
@@ -28,21 +28,19 @@ public class iCal extends HttpServlet {
 	 */
 	public iCal() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	private void getMenu(){
 		Parser p = new Parser();
 		try {
+			YemekMenuCalendar.cleanCalendar();
 			List<GununYemegi> ayinYemegi = p.aylikYemekleriCek();
 			for(GununYemegi gy : ayinYemegi){
 				YemekMenuCalendar.addMenu(gy.getDay(), gy.getMeal());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	
 	/**
@@ -51,10 +49,13 @@ public class iCal extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if (YemekMenuCalendar.getInstance().getComponents().size() == 0) {
-			getMenu();
-		}
 		
+		
+		long currentTimeMillis = System.currentTimeMillis();
+		if (lastUpdateTime == 0 || (currentTimeMillis-lastUpdateTime)>(1000*60*60) ) {
+			getMenu();
+			lastUpdateTime = currentTimeMillis;
+		}
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(YemekMenuCalendar.getInstance().toString());
 	}
