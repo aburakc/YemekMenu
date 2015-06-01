@@ -23,7 +23,7 @@ public class Parser {
 	public List<GununYemegi> aylikYemekleriCek() throws IOException {
 		List<GununYemegi> ayinYemegi = new LinkedList<GununYemegi>();
 		Document doc = Jsoup.connect(ADDRESS).get();
-		Elements headlines = doc.select("table tr td table tr[height=30]");
+		Elements headlines = doc.select("table tr td table tr");
 		for (int i = 1; i < headlines.size(); i++) {
 			Element dayRow = headlines.get(i);
 			Elements dayCells = dayRow.select("> td");
