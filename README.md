@@ -1,2 +1,2 @@
 # YemekMenu
-Yemek menüsünün iCal olarak yayınlamak amacıyla hazırlanmıştır.
+* Publish Launch Menu as internet calendar (ical format)
